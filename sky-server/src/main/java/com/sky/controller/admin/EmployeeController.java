@@ -90,11 +90,33 @@ public class EmployeeController {
         return Result.success();
     }
 
+    /**
+     * PAGE QUERY
+     *
+     * @param employeePageQueryDTO
+     * @return
+     */
+
     @GetMapping("/page")
     @ApiOperation("Pagination Query")
     public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO) {
         log.info("Pagination Query, param: {}", employeePageQueryDTO);
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    /**
+     * START OR STOP EMPLOYEE ACCOUNT
+     *
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("Start and Stop Employee Account")
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        log.info("Start or Stop Employee Account, id: {}, status: {}", id, status);
+        employeeService.startOrStop(status, id);
+        return Result.success();
     }
 }
