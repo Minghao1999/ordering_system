@@ -22,7 +22,7 @@ public class CommonController {
      * @param file
      * @return
      */
-    //TODO Use AWS Upload File
+    //TODO Use Azure Upload File
     @PostMapping("/upload")
     @ApiOperation("File Upload")
     public Result<String> upload(MultipartFile file) {

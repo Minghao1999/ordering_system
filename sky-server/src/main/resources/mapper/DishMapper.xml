@@ -16,10 +16,10 @@
                 and d.name like concat('%', #{name}, '%')
             </if>
             <if test="categoryId != null">
-                and d.name like concat('%', #{categoryId}, '%')
+                and d.category_Id like concat('%', #{categoryId}, '%')
             </if>
             <if test="status != null">
-                and d.name like concat('%', #{status}, '%')
+                and d.status like concat('%', #{status}, '%')
             </if>
         </where>
         order by d.create_time desc

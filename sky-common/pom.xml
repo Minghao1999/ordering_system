@@ -19,6 +19,12 @@
             <artifactId>fastjson</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-storage-blob</artifactId>
+            <version>12.21.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
         </dependency>
