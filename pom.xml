@@ -110,6 +110,20 @@
                 <version>${jaxb-api}</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-resolver-dns-native-macos</artifactId>
+                <version>4.1.86.Final</version>
+                <classifier>osx-aarch_64</classifier>
+            </dependency>
+            <dependency>
+                <groupId>io.lettuce.core</groupId>
+                <artifactId>lettuce-core</artifactId>
+                <version>6.2.5</version> <!-- 或更高版本 -->
+            </dependency>
+
+
+
             <!-- poi -->
             <dependency>
                 <groupId>org.apache.poi</groupId>
