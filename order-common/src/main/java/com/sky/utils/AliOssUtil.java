@@ -21,48 +21,48 @@ public class AliOssUtil {
 
     /**
      * 文件上传
-     *
-     * @param bytes
-     * @param objectName
-     * @return
+     * @param bytes 文件内容
+     * @param objectName 目标文件名
+     * @return 文件访问URL
      */
     public String upload(byte[] bytes, String objectName) {
+        log.info("Uploading file to OSS: {}", objectName);
 
-        // 创建OSSClient实例。
+        // 1. 创建 OSS 客户端
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
         try {
-            // 创建PutObject请求。
+            // 2. 检查 objectName 是否为空
+            if (objectName == null || objectName.trim().isEmpty()) {
+                throw new IllegalArgumentException("ObjectName cannot be empty");
+            }
+
+            // 3. 上传文件
             ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(bytes));
+
+            // 4. 生成访问 URL
+            String fileUrl = String.format("https://%s.%s/%s", bucketName, endpoint, objectName);
+            log.info("File uploaded successfully: {}", fileUrl);
+            return fileUrl;
+
         } catch (OSSException oe) {
-            System.out.println("Caught an OSSException, which means your request made it to OSS, "
-                    + "but was rejected with an error response for some reason.");
-            System.out.println("Error Message:" + oe.getErrorMessage());
-            System.out.println("Error Code:" + oe.getErrorCode());
-            System.out.println("Request ID:" + oe.getRequestId());
-            System.out.println("Host ID:" + oe.getHostId());
+            log.error("OSS Exception: ErrorMessage={}, ErrorCode={}, RequestId={}, HostId={}",
+                    oe.getErrorMessage(), oe.getErrorCode(), oe.getRequestId(), oe.getHostId());
+            throw new RuntimeException("OSS Upload Failed: " + oe.getErrorMessage(), oe);
+
         } catch (ClientException ce) {
-            System.out.println("Caught an ClientException, which means the client encountered "
-                    + "a serious internal problem while trying to communicate with OSS, "
-                    + "such as not being able to access the network.");
-            System.out.println("Error Message:" + ce.getMessage());
+            log.error("Client Exception: {}", ce.getMessage());
+            throw new RuntimeException("OSS Client Error: " + ce.getMessage(), ce);
+
+        } catch (Exception e) {
+            log.error("Unexpected Error: {}", e.getMessage(), e);
+            throw new RuntimeException("File Upload Failed: " + e.getMessage(), e);
+
         } finally {
+            // 5. 关闭客户端
             if (ossClient != null) {
                 ossClient.shutdown();
             }
         }
-
-        //文件访问路径规则 https://BucketName.Endpoint/ObjectName
-        StringBuilder stringBuilder = new StringBuilder("https://");
-        stringBuilder
-                .append(bucketName)
-                .append(".")
-                .append(endpoint)
-                .append("/")
-                .append(objectName);
-
-        log.info("文件上传到:{}", stringBuilder.toString());
-
-        return stringBuilder.toString();
     }
 }

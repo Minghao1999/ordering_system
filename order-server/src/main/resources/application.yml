@@ -2,6 +2,11 @@ server:
   port: 8080
 
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
   profiles:
     active: dev
   main:
@@ -45,6 +50,11 @@ sky:
     user-secret-key: itheima
     user-ttl: 7200000
     user-token-name: authentication
+  alioss:
+    endpoint: ${sky.alioss.endpoint}
+    access-key-id: ${sky.alioss.access-key-id}
+    access-key-secret: ${sky.alioss.access-key-secret}
+    bucket-name: ${sky.alioss.bucket-name}
   wechat:
     appid: ${sky.wechat.appid}
     secret: ${sky.wechat.secret}

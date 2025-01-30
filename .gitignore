@@ -3,4 +3,5 @@
 *.iml
 *.class
 *Test.java
-**/test/
+**/test/order-server/src/main/resources/application-dev.yml
+**/order-server/src/main/resources/application-dev.yml
