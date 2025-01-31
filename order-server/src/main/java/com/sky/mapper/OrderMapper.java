@@ -19,4 +19,6 @@ public interface OrderMapper {
     Page<Orders> pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
 
     Double sumByMap(Map map);
+
+    Integer countByMap(Map map);
 }
